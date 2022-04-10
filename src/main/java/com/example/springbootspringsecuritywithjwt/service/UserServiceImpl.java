@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+
+import static java.rmi.server.LogStream.log;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -19,16 +22,19 @@ public class UserServiceImpl implements UserService{
     private final RoleRepository roleRepo;
     @Override
     public User saveUser(User user) {
+       // log.info("Saving new user to the database");
         return userRepo.save(user);
     }
 
     @Override
     public Role saveRole(Role role) {
+       // log.info("Saving new role {} to the database",role.getName());
         return roleRepo.save(role);
     }
 
     @Override
     public void addRoleToUser(String username, String roleName) {
+        //log.info("Adding role {} to use {}",roleName,username);
      User user = userRepo.findByUsername(username);
      Role role = roleRepo.findByName(roleName);
      user.getRoles().add(role);
